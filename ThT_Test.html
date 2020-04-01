@@ -1,0 +1,627 @@
+<Pages>
+    <Page code="DEFAULT" title="Home">
+        <ScrollView>
+            <ViewBox theme="whitebox">
+                <MomoButton text="Home Screen">
+                    <onPress>
+                        <navigateTo code="home"></navigateTo>
+                    </onPress>
+                </MomoButton>
+            </ViewBox>
+            <Text></Text>
+            <Text>================mrPhuc Cases================</Text>
+            <Text></Text>
+            <ViewBox theme="whitebox">
+                <MomoButton text="OTP Screen">
+                    <onPress>
+                        <navigateTo code="mrPhuc"></navigateTo>
+                    </onPress>
+                </MomoButton>
+            </ViewBox>
+            <Text></Text>
+            <ViewBox theme="whitebox">
+                <MomoButton text="Deactivate click when checked Image">
+                    <onPress>
+                        <navigateTo code="mrPhuc2"></navigateTo>
+                    </onPress>
+                </MomoButton>
+            </ViewBox>
+            <Text></Text>
+            <ViewBox theme="whitebox">
+                <MomoButton text="Validate group">
+                    <onPress>
+                        <navigateTo code="mrPhuc3"></navigateTo>
+                    </onPress>
+                </MomoButton>
+            </ViewBox>
+            <Text></Text>
+            <ViewBox theme="whitebox">
+                <MomoButton text="Loading Screen">
+                    <onPress>
+                        <navigateTo code="msDiep">
+                        </navigateTo>
+                    </onPress>
+                </MomoButton>
+            </ViewBox>
+            <Text></Text>
+            <ViewBox theme="whitebox">
+                <MomoButton text="SCREEN OTP">
+                    <onPress>
+                        <navigateTo code="mrPhuc4">
+                        </navigateTo>
+                    </onPress>
+                </MomoButton>
+            </ViewBox>
+            <Text></Text>
+            <ViewBox>
+                <MomoButton text="Test 1">
+                    <onPress>
+                        <navigateTo code="test"></navigateTo>
+                    </onPress>
+                </MomoButton>
+            </ViewBox>
+            <Text></Text>
+            <ViewBox>
+                <MomoButton text="Test 2">
+                    <onPress>
+                        <navigateTo code="test2"></navigateTo>
+                    </onPress>
+                </MomoButton>
+            </ViewBox>
+            <ViewBox>
+                <MomoButton text="Test 4">
+                    <onPress>
+                        <navigateTo code="test4"></navigateTo>
+                    </onPress>
+                </MomoButton>
+            </ViewBox>
+        </ScrollView>
+    </Page>
+    <Page code="mrPhuc" title="OTP">
+        <View broadCastId="d" style='{"flex":1,"alignItems":"center"}'>
+            <Text>Mã xác thực sẽ được gửi tới</Text>
+            <Text style='{"color":"black","fontWeight":"bold"}'>Xac thuc OTP</Text>
+            <MomoCodeInput id='thttest' codeLength='4' codeViewSize='30' codeFontSize='15'
+                codeBoxStyle='{"backgroundColor":"white"}' autoFocus="true">
+                <onChangeText param="codes">
+                    <sendBroadCast param="textCode"></sendBroadCast>
+                </onChangeText>
+                <onResult param="y">
+                    <!-- <setData name="toad" value="https://yahoo.com"></setData>
+                    <openURL param="@toad;"></openURL> -->
+                </onResult>
+            </MomoCodeInput>
+            <View broadCastId="textCode">
+                <Text>kkk: @codes;</Text>
+            </View>
+            <View style='{"flexDirection":"row"}'>
+                <Text>Không nhận được mã OTP? </Text>
+                <MomoCountdownTimer id="countdown" second=3 mode="MS" format="M : S" timesReset=20>
+                    <onResult param="timeToResend">
+                        <sendBroadCast param="checkResend"></sendBroadCast>
+                    </onResult>
+                </MomoCountdownTimer>
+                <View broadCastId="checkResend">
+                    <if param="@timeToResend; > 0">
+                        <true>
+                            <TouchableOpacity>
+                                <onPress>
+                                    <thttest.setChangeText>
+                                        </thttest.setFocus>
+                                        <countdown.reset param=3></countdown.reset>
+                                        <!-- <showAlert message="@stringify(timeToResend); true" btnCancel='dong'></showAlert> -->
+                                        <setData name="timeToResend" value="0"></setData>
+                                        <sendBroadCast param="checkResend"></sendBroadCast>
+                                </onPress>
+                                <Text style='{"color":"blue"}'> Gửi lại OTP</Text>
+                            </TouchableOpacity>
+                        </true>
+                        <false>
+                            <Text style='{"color":"grey"}'> Gửi lại OTP</Text>
+                        </false>
+                    </if>
+                </View>
+            </View>
+        </View>
+        <View style='{"paddingBottom":10}'>
+            <Text>Lưu ý: dfasfdsafads fadksjf adksjf dklsajf kladsjfklsj dlfkjadsl fj jdsklf jadsl jfklads</Text>
+        </View>
+        <MomoButton text="clear and focus">
+            <onPress>
+                <setData name="fff" value="0"></setData>
+                <sendBroadCast param="fff1"></sendBroadCast>
+            </onPress>
+        </MomoButton>
+        <View broadCastId="fff1">
+            <if param="@y; == 312312312">
+                <true>
+                </true>
+                <false>
+                    <setTimeout timeout=100>
+                        <thttest.clear></thttest.clear>
+                        <thttest.setFocus></thttest.setFocus>
+                    </setTimeout>
+                </false>
+            </if>
+        </View>
+    </Page>
+    <Page code="mrPhuc2" title="Camera">
+        <setData name="done" value="false"></setData>
+        <View style='{"width":160,"height":125}' broadCastId="activeDone">
+            <MomoCropCamera id="selfie" groupData="groupPhoto" chooseFrom="camera" position="back" mode="portrait"
+                title="Ảnh chân dung" showGuide="true" clearCache="false" value="@selfie;"
+                bottomText="Di chuyển camera để thấy rõ CMND và nhấn nút Chụp" placeholderImage="image_portrait"
+                styleContainer='{"width":160,"height":125}'>
+            </MomoCropCamera>
+            <MomoCropCamera id="backNID" groupData="PHOTO_GROUP" chooseFrom="camera" position="back"
+                title='${LABEL.get("REGISTER_PHOTO_TITLE_CAMERA_BACK_NID")}' clearCache="true"
+                value="@nationalIDcardBack;" bottomText="${LABEL.get('photoPageBottomText')}"
+                placeholderImage="img_cmnd_sau" styleContainer='{"width":160,"height":125}' scaleHeight="152"
+                scaleWidth="5">
+                <tracking event="service_loan"
+                    param='{"action":"click_take_backphoto","stage":"","provider":"${SERVICE_CODE}"}'></tracking>
+            </MomoCropCamera>
+
+
+            <compressImage data="@selfie;"></compressImage>
+            <if param="@done; == true">
+                <true>
+                    <View
+                        style='{"width":160,"height":125,"padding":10,"backgroundColor":"transparent","justifyContent":"flex-end","alignItems":"flex-end","position":"absolute"}'>
+                        <Image
+                            source='https://cdn3.iconfinder.com/data/icons/flat-actions-icons-9/792/Tick_Mark_Dark-512.png'
+                            style={"height":15,"width":15}></Image>
+                    </View>
+                </true>
+            </if>
+        </View>
+
+        <Text></Text>
+        <View style='{"marginTop":100}'>
+            <MomoButton text="Done">
+                <onPress>
+                    <setData name="done" value="true"></setData>
+                    <sendBroadCast param="activeDone"></sendBroadCast>
+                    <navigateTo code="msDiep"></navigateTo>
+                    <setTimeout timeout=5000>
+                        <navigateTo code="mrPhuc"></navigateTo>
+                    </setTimeout>
+                </onPress>
+            </MomoButton>
+            <Text></Text>
+            <MomoButton text="Not done">
+                <onPress>
+                    <setData name="done" value="false"></setData>
+                    <sendBroadCast param="activeDone"></sendBroadCast>
+                </onPress>
+            </MomoButton>
+        </View>
+    </Page>
+    <Page code="mrPhuc4" title="test">
+        <MomoButton text="Not done">
+            <onPress>
+                <navigateTo code="test4"></navigateTo>
+            </onPress>
+        </MomoButton>
+        <ScrollView>
+            <View style='{"backgroundColor":"#fff"}'>
+                <View style='{"backgroundColor":"#edeeee","height":80,"justifyContent":"flex-end"}'>
+                    <Text>NỘI DUNG THAwNH TOÁN</Text>
+                </View>
+                <setData name="testL"
+                    value='[{"text":"Đóng&#32;phí&#32;bảo&#32;hiểm&#32;đầu&#32;tiên","value":15000000,"type":"fee1"},{"text":"Bổ&#32;sung&#32;phí&#32;bảo&#32;hiểm&#32;đầu&#32;tiên","value":20000000,"type":"fee2"},{"text":"Đóng&#32;phí&#32;bảo&#32;hiểm&#32;định&#32;kỳ","value":30000000,"type":"fee3"},{"text":"Hoàn&#32;trả&#32;tạm&#32;ứng&#32;tiền&#32;mặt","value":40000000,"type":"fee4"},{"text":"Hoàn&#32;trả&#32;tạm&#32;ứng&#32;đóng&#32;phí&#32;bảo&#32;hiểm&#32;tự&#32;động","value":50000000,"type":"fee5"},{"text":"Thanh&#32;toán&#32;khác","value":60000000,"type":"fee6"}]'>
+                </setData>
+                <!-- <setData name="tet1" value="true"></setData>
+                <setData name="tet2" value="false"></setData>
+                <setData name="tet3" value="false"></setData> -->
+                <for of="@testL;">
+                    <setData name="@this.type;" value="false"></setData>
+                </for>
+                <setData name="typemau" value="a"></setData>
+                <View broadCastId="fee">
+                    <!-- <Text>helo @gg.type;</Text>
+                    <MomoRadioGroup id="billData" itemDirection="column" items="@testL;">
+                        <onValueChange param="gg">
+                            <setData name="ggd" value="@gg;"></setData>
+                            <sendBroadCast param="fee"></sendBroadCast>
+                        </onValueChange>
+                    </MomoRadioGroup> -->
+                    <for of="@testL;">
+                        <View style='{"flexDirection":"row"}'>
+                            <View style='{"flex":0.65}'>
+                                <MomoCheckBox id="feeCheck" isChecked="@@this.type;;" text="@this.text;">
+                                    <onValueChange>
+                                        <if param="@this.type; == true">
+                                            <false>
+                                                <feeCheck.checkItem param="true"></feeCheck.checkItem>
+                                                <setGroupValidate name="binBtn" bindIDs='[feeCheck]'>
+                                                </setGroupValidate>
+                                                <for of="@testL;">
+                                                    <setData name="@this.type;" value="false"></setData>
+                                                </for>
+                                                <setData name="@this.type;" value="true"></setData>
+                                                <setData name="feevalue" value="@this.value;"></setData>
+                                                <setData name="typemau" value="@this.type;"></setData>
+                                                <sendBroadCast param="fee"></sendBroadCast>
+                                            </false>
+                                        </if>
+                                    </onValueChange>
+                                </MomoCheckBox>
+                            </View>
+                            <View style='{"flex":0.35,"alignItems":"flex-end","justifyContent":"center"}'>
+                                <Text style='{"fontSize":16}'>@numberToMoney(@this.value;);</Text>
+                            </View>
+                        </View>
+                    </for>
+                    <View style='{"backgroundColor":"#edeeee","height":8}'></View>
+                    <MomoTextInput broadCastId="data" flyText="Số tiền" placeholder="xx.000.000"
+                        value="@numberToMoney(@feevalue;);"></MomoTextInput>
+                    <Text style='{"fontSize":16}'>@typemau;</Text>
+                </View>
+            </View>
+        </ScrollView>
+        <ViewBox>
+            <MomoButton style='{"height":46}' bindIDs='["fee1"]' id="btnNext" text="dasdsa">
+                <onPress>
+
+                </onPress>
+            </MomoButton>
+        </ViewBox>
+
+    </Page>
+    <Page code="mrPhuc3" title="Hoàn tất hồ sơ vay"
+        rightIcon="https://img.mservice.io/momo_app_v2/new_version/Special_Force/icon_logo/HomeIcon.png">
+        <onRightIconPress>
+            <!-- CODE RETURN LOAN_HISTORIES PAGE -->
+            <sendToBEProxy serviceId="@serviceCode;"
+                param='{"type":2,"serviceCode":"@serviceCode;","user":"#UserInfo.phoneNumber;"}' showLoading="true">
+                <onResult param="ProxyParam">
+                    <parseJSON name="json_histories" param="@ProxyParam.response.extras.histories;"></parseJSON>
+                    <setData name="histories" value="@json_histories;"></setData>
+                    <Navigate.goTop></Navigate.goTop>
+                    <restartRoute code="LOAN_HISTORIES" />
+                </onResult>
+            </sendToBEProxy>
+            <!-- // END CODE RETURN LOAN_HISTORIES PAGE -->
+        </onRightIconPress>
+        <ScrollView>
+            <Simple.TitleBox text="NGƯỜI THAM CHIẾU 1"></Simple.TitleBox>
+            <ViewBox theme="whitebox">
+                <MomoTextInput id="fullName" saveField="realValue" groupData="group1" clearCache="false" maxLength="30"
+                    value="Dang Phuc" placeholder="Họ và tên" flyText="Họ và tên"
+                    validateRegex="/^([^!@#$%^&*().,:‘“?|~\d\s][ ]{0,1}){3,30}[^!@#$%^&*().,:‘“?|~\d\s]$/g"
+                    errorMessage="Họ và tên không hợp lệ">
+                </MomoTextInput>
+                <MomoTextInput id="phone" keyboardType="numeric" saveField="realValue" clearCache="false" maxLength="10"
+                    value="123123213131" groupData="group1" placeholder="Số điện thoại" flyText="Số điện thoại"
+                    validateRegex="/([0-9]{10})\b/g" errorMessage="Vui lòng nhập đúng định dạng số điện thoại">
+                </MomoTextInput>
+            </ViewBox>
+
+            <Simple.TitleBox text="NGƯỜI THAM CHIẾU 2"></Simple.TitleBox>
+            <ViewBox theme="whitebox">
+                <MomoTextInput id="fullName" saveField="realValue" groupData="group2" clearCache="false" maxLength="30"
+                    value="" placeholder="Họ và tên" flyText="Họ và tên"
+                    validateRegex="/^([^!@#$%^&*().,:‘“?|~\d\s][ ]{0,1}){3,30}[^!@#$%^&*().,:‘“?|~\d\s]$/g"
+                    errorMessage="Họ và tên không hợp lệ">
+                </MomoTextInput>
+                <MomoTextInput id="phone" keyboardType="numeric" saveField="realValue" clearCache="false" maxLength="10"
+                    value="1231255555" groupData="group2" placeholder="Số điện thoại" flyText="Số điện thoại"
+                    validateRegex="/([0-9]{10})\b/g" errorMessage="Vui lòng nhập đúng định dạng số điện thoại">
+                </MomoTextInput>
+            </ViewBox>
+
+            <MomoButton bindIDs='["fullName","phone"]' id="btnNext" text="TIẾP TỤC">
+                <onPress>
+                    <Array.push name="user" param="@groupData.group1;"></Array.push>
+                    <Array.push name="user" param="@groupData.group2;"></Array.push>
+
+                    <!--            <parseJSON name="data" param="@user;"></parseJSON>-->
+                    <showAlert title="Huỷ hồ sơ vay" message="@user;" btnConfirm="TIẾP TỤC ĐĂNG KÝ"></showAlert>
+                </onPress>
+            </MomoButton>
+        </ScrollView>
+    </Page>
+    <Page code="msDiep" title="Màn hình xoay">
+        <View style='{"flex":1,"justifyContent":"center","alignItems":"center","marginHorizontal":45}'>
+            <View style='{"justifyContent":"center","alignItems":"center"}'>
+                <View style='{"height":100,"width":100,"position":"absolute",zIndex":1}'>
+                    <Image
+                        source="https://img.mservice.io/momo_app_v2/new_version/Special_Force/icon_logo/Loading_icon_White__13.gif"
+                        style='{"height":100,"width":100}'></Image>
+                </View>
+                <View style='{"height":45,"width":45,"position":"absolute","zIndex":3}'>
+                    <Image source="https://img.mservice.io/momo_app_v2/new_version/Special_Force/icon_logo/bank@2x.png"
+                        style='{"height":45,"width":45}'></Image>
+                </View>
+            </View>
+            <Text style='{"marginTop":10,"textAlign":"center","color":"black","fontSize":16}'>Quá trình gửi hồ sơ có thể
+                mất đến 1 phút. Xin vui lòng đợi.</Text>
+        </View>
+    </Page>
+    <!-- BUTTON USER CANCEL -->
+    <Page code="test">
+        <View style='{"backgroundColor":"#fff","flex":1}'>
+            <ScrollView>
+                <View broadCastId="thth">
+                    <setData name="age" value='@parseInt(@getAge("@dob.displayValue;","dd/MM/yyyy"););'></setData>
+                    <if param='@age; > 16'>
+                        <true>
+                            <Text>True: @getAge("@dob;","dd/MM/yyyy");</Text>
+                        </true>
+                        <false>
+                            <Text>False: @parseInt(@getAge("@dob;","dd/MM/yyyy");); @getAge("@dob;","dd/MM/yyyy");</Text>
+                            <sendBroadCast param="thth"></sendBroadCast>
+                        </false>
+                    </if>
+                </View>
+                <View style='{"alignItems":"center","marginTop":12}'>
+                    <Image source="https://img.mservice.io/momo_app_v2/new_version/Special_Force/icon_logo/img-progress-bar-1.png"
+                        style='{"height":14,"width":114}'>
+                    </Image>
+                </View>
+                <View style='{"backgroundColor":"#fffaf1","borderColor":"#f5a623","borderWidth":1,"marginVertical":24,"marginHorizontal":12,"padding":12,"justifyContent":"center","borderRadius":8}'>
+                    <Text style='{"fontSize":12,"color":"#222"}'>Dữ liệu bạn cung cấp hoàn toàn bảo mật và chỉ phục vụ cho việc phòng chống dịch, thuôc quản lý của Ban chỉ đạo quốc gia về Phòng chống dịch Covid-19</Text>
+                </View>
+
+                <View style='{"paddingHorizontal":12}'>
+                    <Text style='{"fontSize":20,"fontWeight":"bold","color":"#222"}'>Khai báo y tế cho</Text>
+                    <MomoRadioGroup id="who"
+                                    title=""
+                                    value='{"text":"Bản&#32;thân","value":0}'
+                                    items='[{"text":"Bản&#32;thân","value":"0"},{"text":"Bạn&#32;bè/&#32;người&#32;thân","value":"1"}]'
+                                    contentContainerStyle='{"flex":1}'>
+                    </MomoRadioGroup>
+                </View>
+
+                <View style='{"paddingHorizontal":12,"marginTop":12}'>
+                    <Text style='{"fontSize":20,"fontWeight":"bold","color":"#222"}'>Thông tin cá nhân</Text>
+                    <View style='{"marginTop":10}'>
+                        <Text style='{"color":"#222","fontWeight":"700","fontSize":12}'>HỌ VÀ TÊN</Text>
+                        <View style='{"backgroundColor":"#f0f0f0","borderRadius":8,"marginTop":6,"paddingHorizontal":10}'>
+                            <MomoTextInput placeholder="Nhập họ và tên" flyText="Họ và tên"></MomoTextInput>
+                        </View>
+                    </View>
+                    
+                    <View style='{"flexDirection":"row","marginTop":12}'>
+                        <View style='{"flex":0.5,"paddingRight":6}'>
+                            <Text style='{"fontSize":10,"fontWeight":"bold","color":"#222"}'>SỐ ĐIỆN THOẠI</Text>
+                            <View style='{"backgroundColor":"#f0f0f0","borderRadius":8,"marginTop":6,"paddingHorizontal":10}'>
+                                <MomoTextInput placeholder="Nhập số điện thoại" flyText="Số điện thoại"></MomoTextInput>
+                            </View>
+                        </View>
+                        <View style='{"flex":0.5,"paddingLeft":6}'>
+                            <Text style='{"fontSize":10,"fontWeight":"bold","color":"#222"}'>SỐ CMND/ CCCD/ HỘ CHIẾU</Text>
+                            <View style='{"backgroundColor":"#f0f0f0","borderRadius":8,"marginTop":6,"paddingHorizontal":10}'>
+                                <MomoTextInput placeholder="Nhập CMND" flyText="CMND/CCCD/Hộ chiếu"></MomoTextInput>
+                            </View>
+                        </View>
+                    </View>
+
+                    <View style='{"marginTop":10}'>
+                        <Text style='{"color":"#222","fontWeight":"700","fontSize":12}'>NGÀY SINH</Text>
+                        <View style='{"backgroundColor":"#f0f0f0","borderRadius":8,"marginTop":6,"paddingHorizontal":10}'>
+                            <MomoDateWheelPicker id='dob'
+                                    inputFormat='dd/MM/yyyy'
+                                    outputFormat='dd/MM/yyyy'
+                                    value='${user.birthday}'
+                                    title='Ngày sinh'
+                                    flyText='Ngày sinh'
+                                    maxDate="${dateOfToday}"
+                                    placeholder='Ngày sinh'
+                                    errorMessage='Thông tin không hợp lệ'
+                                    groupData="groupContract">
+                            </MomoDateWheelPicker>
+                        </View>
+                    </View>
+
+                    <View style='{"marginTop":12}'>
+                        <Text style='{"fontSize":10,"fontWeight":"700","color":"#222"}'>GIỚI TÍNH</Text>
+                        <MomoRadioGroup id="who"
+                                        title=""
+                                        value='{"text":"Nam","value":0}'
+                                        items='[{"text":"Nam","value":"0"},{"text":"Nữ","value":"1"}]'
+                                        contentContainerStyle='{"flex":1}'>
+                        </MomoRadioGroup>
+                    </View>
+
+                    <View style='{"marginTop":12}'>
+                        <Text style='{"color":"#222","fontWeight":"700","fontSize":12}'>SỐ THẺ BẢO HIỂM Y TẾ (KHÔNG BẮT BUỘC)</Text>
+                        <View style='{"backgroundColor":"#f0f0f0","borderRadius":8,"marginTop":6,"paddingHorizontal":10}'>
+                            <MomoTextInput placeholder="Nhập số thẻ" flyText="Số thẻ"></MomoTextInput>
+                        </View>
+                    </View>
+                    <View style='{"marginTop":12}'>
+                        <Text style='{"color":"#222","fontWeight":"700","fontSize":12}'>EMAIL (KHÔNG BẮT BUỘC)</Text>
+                        <View style='{"backgroundColor":"#f0f0f0","borderRadius":8,"marginTop":6,"paddingHorizontal":10}'>
+                            <MomoTextInput placeholder="Nhập email" flyText="Email"></MomoTextInput>
+                        </View>
+                    </View>
+                </View>
+
+                <View style='{"paddingHorizontal":12,"marginTop":12}'>
+                    <Text style='{"fontSize":20,"fontWeight":"bold","color":"#222"}'>Địa chỉ hiện tại</Text>
+                    <View style='{"flexDirection":"row","marginTop":12}'>
+                        <View style='{"flex":0.5,"paddingRight":6}'>
+                            <Text style='{"fontSize":10,"fontWeight":"bold","color":"#222"}'>TỈNH/ THÀNH PHỐ</Text>
+                            <View style='{"backgroundColor":"#f0f0f0","borderRadius":8,"marginTop":6,"paddingHorizontal":10}'>
+                                <MomoTextInput placeholder="Nhập tỉnh/ thàn phố" flyText="Tỉnh/ thàn phố"></MomoTextInput>
+                            </View>
+                        </View>
+                        <View style='{"flex":0.5,"paddingLeft":6}'>
+                            <Text style='{"fontSize":10,"fontWeight":"bold","color":"#222"}'>QUẬN/ HUYỆN</Text>
+                            <View style='{"backgroundColor":"#f0f0f0","borderRadius":8,"marginTop":6,"paddingHorizontal":10}'>
+                                <MomoTextInput placeholder="Nhập quận/ huyện" flyText="Quận/ huyện"></MomoTextInput>
+                            </View>
+                        </View>
+                    </View>
+
+                    <View style='{"marginTop":12}'>
+                        <Text style='{"color":"#222","fontWeight":"700","fontSize":12}'>PHƯỜNG/ XÃ</Text>
+                        <View style='{"backgroundColor":"#f0f0f0","borderRadius":8,"marginTop":6,"paddingHorizontal":10}'>
+                            <MomoTextInput placeholder="Nhập phường/ xã" flyText="Phường/ xã"></MomoTextInput>
+                        </View>
+                    </View>
+                    <View style='{"marginTop":12,"marginBottom":30}'>
+                        <Text style='{"color":"#222","fontWeight":"700","fontSize":12}'>SỐ NHÀ, ĐƯỜNG</Text>
+                        <View style='{"backgroundColor":"#f0f0f0","borderRadius":8,"marginTop":6,"paddingHorizontal":10}'>
+                            <MomoTextInput placeholder="Nhập số nhà, đường" flyText="Số nhà, đường"></MomoTextInput>
+                        </View>
+                    </View>
+                </View>
+            </ScrollView>
+            <MomoButton style='{"borderRadius":8,"marginHorizontal":12,"marginVertical":15}' id="btnNext" text="Tiếp tục"></MomoButton>
+        </View>
+    </Page>
+    <Page code="test2">
+        <View style='{"backgroundColor":"#fff","flex":1}'>
+            <ScrollView>
+                <View style='{"alignItems":"center"}'>
+                    <Image source="https://img.mservice.io/momo_app_v2/new_version/Special_Force/banner/banner-finish-khaibaoyte.png" style='{"width":376,"height":376}'> 
+                </View>
+                </Image>
+                <Text style='{"fontSize":20,"fontWeight":"bold","color":"#222","marginBottom":6,"marginHorizontal":12,"textAlign":"center"}'>Gửi khai báo thành công</Text>
+                <Text style='{"fontSize":15,"color":"#222","marginHorizontal":12,"textAlign":"center"}'>Cảm ơn bạn đã thực hiện khai báo y tế.</Text>
+                <Text style='{"fontSize":15,"color":"#222","marginHorizontal":12,"textAlign":"center"}'>Thông tin khai báo đã được MoMo gửi đến cơ quan quản lý có thẩm quyền.</Text>
+            </ScrollView>
+            <MomoButton style='{"borderRadius":8,"marginHorizontal":12,"backgroundColor":"transparent","borderColor":"#b0006d","borderWidth":1}' 
+                        id="btnNext" 
+                        text="Khai báo cho người thân"
+                        textStyle='{"color":"#b0006d"}'>
+            </MomoButton>
+            <MomoButton style='{"borderRadius":8,"marginHorizontal":12,"marginVertical":15}' 
+                        id="btnNext" 
+                        text="Màn hình chính">
+            </MomoButton>
+        </View>
+
+        <!-- <View>
+            <MomoHyperVerge>
+                <onResult param="tuan21">
+                </onResult>
+            </MomoHyperVerge>
+        </View> -->
+    </Page>
+        <!-- <Text>@getAge("21/03/1990","dd/MM/yyyy");</Text> -->
+    <Page code="test4" title="Khai báo y tế" backgroundColor='#b0006d'>
+        <setData name="typeA"
+            value='[{"id":"aa","text":"Tiếp&#32;xúc&#32;với&#32;trường&#32;hợp&#32;bệnh&#32;hoặc&#32;nghi&#32;ngờ&#32;mắc&#32;bệnh&#32;COVID19&#32;không?","yes":"aa1","no":"aa2","color":"#f7f7f7"},{"id":"ab","text":"Có&#32;đi&#32;về&#32;từ&#32;vùng&#32;dịch&#32;COVID19&#32;không?","yes":"ab2","no":"ab2","color":"#fff"},{"id":"ac","text":"Có&#32;tiếp&#32;xúc&#32;với&#32;trường&#32;hợp&#32;đi&#32;về&#32;từ&#32;vùng&#32;dịch&#32;không?","yes":"ac2","no":"ac2","color":"#f7f7f7"}]'>
+        </setData>
+        <setData name="symptom"
+            value='[{"id":"ba","text":"Sốt","yes":"ba1","no":"ba2","color":"#f7f7f7"},{"id":"bb","text":"Ho","yes":"bb2","no":"bb2","color":"#fff"},{"id":"bc","text":"Khó&#32;thở","yes":"bc2","no":"bc2","color":"#f7f7f7"},{"id":"bd","text":"Viêm&#32;phối","yes":"bd2","no":"bd2","color":"#fff"},{"id":"be","text":"Đau&#32;họng","yes":"be2","no":"be2","color":"#f7f7f7"},{"id":"bf","text":"Mệt&#32;mỏi","yes":"bf2","no":"bf2","color":"#fff"}]'>
+        </setData>
+        <setData name="beingSick"
+            value='[{"id":"ca","text":"Bệnh&#32;gan&#32;mãn&#32;tính","yes":"ca1","no":"ca2","color":"#f7f7f7"},{"id":"cb","text":"Bệnh&#32;máu&#32;mãn&#32;tính","yes":"cb2","no":"cb2","color":"#fff"},{"id":"cc","text":"Bệnh&#32;phổi&#32;mãn&#32;tính","yes":"cc2","no":"cc2","color":"#f7f7f7"},{"id":"cd","text":"Bệnh&#32;thận&#32;mãn&#32;tính","yes":"cd2","no":"cd2","color":"#fff"},{"id":"ce","text":"Bệnh&#32;tim&#32;mạch","yes":"ce2","no":"ce2","color":"#f7f7f7"},{"id":"cf","text":"Huyết&#32;áp&#32;cao","yes":"cf2","no":"cf2","color":"#fff"},{"id":"cg","text":"HIV&#32;hoặc&#32;miễn&#32;giảm&#32;miễn&#32;dịch","yes":"cg2","no":"cg2","color":"#f7f7f7"},{"id":"ch","text":"Người&#32;nhận&#32;ghép&#32;tạng,&#32;tủy&#32;xương","yes":"ch2","no":"ch2","color":"#fff"},{"id":"ci","text":"Tiểu&#32;đường","yes":"ci2","no":"ci2","color":"#f7f7f7"},{"id":"cj","text":"Ung&#32;thư","yes":"cj2","no":"cj2","color":"#fff"},{"id":"ck","text":"Có&#32;thai","yes":"ck2","no":"ck2","color":"#f7f7f7"}]'>
+        </setData>
+        <View style='{"backgroundColor":"#fff","flex":1}'>
+            <ScrollView>
+                <View style='{"alignItems":"center","marginTop":12}'>
+                    <Image source="https://img.mservice.io/momo_app_v2/new_version/Special_Force/banner/img-progress-bar-healthcare.png"
+                        style='{"height":14,"width":114}'>
+                    </Image>
+                </View>
+
+                <View>
+                    <Text style='{"fontSize":20,"fontWeight":"bold","color":"#222","marginTop":22,"marginHorizontal":12}'>Trong vòng 14 ngày anh chị có:</Text>
+                    <for of="@typeA;">
+                        <View style='{"flexDirection":"row","backgroundColor":"@this.color;","width":"100%","paddingHorizontal":12,"paddingVertical":10}'>
+                            <View style='{"flex":0.6,"justifyContent":"center"}'>
+                                <Text style='{"color":"#222"}'>@this.text;</Text>
+                            </View>
+                            <View style='{"flex":0.4,"alignItems":"flex-end","justifyContent":"center"}'>
+                                <MomoRadioGroup id="@this.id;"
+                                                title=""
+                                                viewType="button"
+                                                value='{"text":"Không","value":"@this.no;"}'
+                                                items='[{"text":"Có","value":"@this.yes;"},{"text":"Không","value":"@this.no;"}]'
+                                                style='{"flexDirection":"row","padding":0}'>
+                                </MomoRadioGroup>
+                            </View>
+                        </View>
+                    </for>
+                </View>
+                
+                <View>
+                    <Text style='{"fontSize":20,"fontWeight":"bold","color":"#222","marginTop":22,"marginHorizontal":12}'>Trong vòng 14 ngày, Anh/Chị có xuất hiện dấu hiện nào sau đây không?</Text>
+                    <for of="@symptom;">
+                        <View style='{"flexDirection":"row","backgroundColor":"@this.color;","width":"100%","paddingHorizontal":12,"paddingVertical":10}'>
+                            <View style='{"flex":0.6,"justifyContent":"center"}'>
+                                <Text style='{"color":"#222"}'>@this.text;</Text>
+                            </View>
+                            <View style='{"flex":0.4,"alignItems":"flex-end","justifyContent":"center"}'>
+                                <MomoRadioGroup id="@this.id;"
+                                                title=""
+                                                viewType="button"
+                                                value='{"text":"Không","value":"@this.no;"}'
+                                                items='[{"text":"Có","value":"@this.yes;"},{"text":"Không","value":"@this.no;"}]'
+                                                style='{"flexDirection":"row","padding":0}'>
+                                </MomoRadioGroup>
+                            </View>
+                        </View>
+                    </for>
+                </View>
+
+                <View>
+                    <Text style='{"fontSize":20,"fontWeight":"bold","color":"#222","margin":12}'>Trong vòng 14 ngày, Anh/Chị có đến những quốc gia/vùng lãnh thổ nào?</Text>
+                    <View style='{"backgroundColor":"#f0f0f0","marginHorizontal":12,"paddingHorizontal":12,"justifyContent":"center","borderRadius":8}'>
+                        <MomoTextInput placeholder="Nhập tên quốc gia/ vùng lãnh thổ đã đến" flyText="Tên quốc gia/ vùng lãnh thổ đã đến"></MomoTextInput>
+                    </View>
+                </View>
+
+                <View>
+                    <Text style='{"fontSize":20,"fontWeight":"bold","color":"#222","marginTop":22,"marginHorizontal":12}'>Hiện tại Anh/chị có mắc các bệnh dưới đây không?</Text>
+                    <for of="@beingSick;">
+                        <View style='{"flexDirection":"row","backgroundColor":"@this.color;","width":"100%","paddingHorizontal":12,"paddingVertical":10}'>
+                            <View style='{"flex":0.6,"justifyContent":"center"}'>
+                                <Text style='{"color":"#222"}'>@this.text;</Text>
+                            </View>
+                            <View style='{"flex":0.4,"alignItems":"flex-end","justifyContent":"center"}'>
+                                <MomoRadioGroup id="@this.id;"
+                                                title=""
+                                                viewType="button"
+                                                value='{"text":"Không","value":"@this.no;"}'
+                                                items='[{"text":"Có","value":"@this.yes;"},{"text":"Không","value":"@this.no;"}]'
+                                                style='{"flexDirection":"row","padding":0}'>
+                                </MomoRadioGroup>
+                            </View>
+                        </View>
+                    </for>
+                </View>
+
+                <View style='{"backgroundColor":"#fffaf1","borderColor":"#f5a623","borderWidth":1,"marginVertical":24,"marginHorizontal":12,"padding":12,"justifyContent":"center","borderRadius":8}'>
+                    <MomoCheckBox id="check"
+                                text="Tôi cam kết các thông tin khai báo là đúng sự thật và Tôi đồng ý chia sẻ thông tin cho các cơ quan quản lý nhà nước phục vụ mục đích phòng dịch">
+                    </MomoCheckBox>
+                </View>
+            </ScrollView>
+            <MomoButton style='{"borderRadius":8,"marginHorizontal":12,"marginVertical":15}' id="btnNext" text="Xác nhận"></MomoButton>
+        </View>
+    </Page>
+</Pages>
+
+
+<!-- {
+    if (node.children[i] && node.children[i].attribs && node.children[i].attribs.param) {
+        for (var _len = arguments.length, param = new Array(_len), _key = 0; _key < _len; _key++) {
+            param[_key] = arguments[_key];
+        }
+        if (param != ull && param.length > 1) {
+            _DataContainer.default.setData(node.children[i].attribs.param, param);
+        } else {
+            if (param[0] != null) {
+                _DataContainer.default.setData(node.children[i].attribs.param, param[0]);
+            }
+        }
+    } 
+    if (thisParam != null && node.children) {
+        for (var _iterator2 = node.children[i].children, _isArray2 = Array.isArray(_iterator2), _i2 = 0, _iterator2 = _isArray2 ? _iterator2 : _iterator2[typeof Symbol === "function" ? Symbol.iterator : "@@iterator"](); ;) {
+            var _ref2;
+            if (_isArray2) {
+                if (_i2 >= _iterator2.length) break; _ref2 = _iterator2[_i2++];
+            } else {
+                _i2 = _iterator2.next(); if (_i2.done) break; _ref2 = _i2.value;
+            }
+            var _child3 = _ref2; _child3.this = JSON.parse(JSON.stringify(thisParam));
+        }
+    } defaultRenderer(node.children[i].children, parent);
+} -->
